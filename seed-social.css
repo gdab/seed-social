@@ -32,6 +32,7 @@
 .ss-google-plus:before {content: "\e008";}
 .ss-seedthemes:before {content: "\e00a";}
 .ss-line:before {content: "\e005";}
+.ss-email:before {content: "\e002";}
 
 
 .seed-social {
@@ -112,6 +113,9 @@
 }
 .seed-social .line a{
 	background-color: #00c300;
+}
+.seed-social .email a{
+	background-color: #000;
 }
 
 .woocommerce-cart .seed-social,

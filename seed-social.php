@@ -108,22 +108,25 @@ function seed_social( $echo = true , $css_class = '') {
 	$is_twitter = get_option( 'seed_social_is_twitter', array( 'on' ) );
 	$is_google_plus = get_option( 'seed_social_is_google_plus', array( 'on' ) );
 	$is_line = get_option( 'seed_social_is_line', array( 'on' ) );
+	$is_email = get_option( 'seed_social_is_email', array( 'on' ) );
 
 	$facebook_text = get_option( 'seed_social_facebook_text', 'Facebook' );
 	$twitter_text = get_option( 'seed_social_twitter_text', 'Twitter' );
 	$google_plus_text = get_option( 'seed_social_google_plus_text', 'Google Plus' );
 	$line_text = get_option( 'seed_social_line_text', 'Line' );
+	$email_text = get_option( 'seed_social_email_text', 'Line' );
 
 	if( $facebook_text == '' ) $facebook_text = 'Facebook';
 	if( $twitter_text == '' ) $twitter_text = 'Twitter';
 	if( $google_plus_text == '' ) $google_plus_text = 'Google Plus';
 	if( $line_text == '' ) $line_text = 'Line';		
+	if( $email_text == '' ) $email_text = 'Email';		
 
 	global $post;
 
 	$seed_social_echo = '';
 
-	if( $is_facebook || $is_twitter || $is_google_plus || $is_line ) {
+	if( $is_facebook || $is_twitter || $is_google_plus || $is_line || $is_email) {
 
 		/* Facebook Button */
 		if( $is_facebook )
@@ -141,6 +144,10 @@ function seed_social( $echo = true , $css_class = '') {
 		if( $is_line )
 			$line = '<a href="https://lineit.line.me/share/ui?url='.urlencode( get_the_permalink( $post->ID ) ).'" target="seed-social"><i class="ss-line"></i><span class="text">' . $line_text . '</span><span class="count"></span></a>';
 
+		/* Email */
+		if( $is_email )
+			$email = '<a href="mailto:?subject='.get_the_title( $post->ID ).'&body='. get_the_permalink( $post->ID ) .'" ><i class="far fa-envelope"></i><span class="text">' . $email_text . '</span><span class="count"></span></a>';
+
 		$seed_social_echo .= '<div class="seed-social '. $css_class . '">';
 
 		if( $is_facebook )
@@ -154,6 +161,9 @@ function seed_social( $echo = true , $css_class = '') {
 
 		if( $is_line )
 			$seed_social_echo .= '<div class="line">'.$line.'</div>';
+
+		if( $is_line )
+			$seed_social_echo .= '<div class="email">'.$email.'</div>';
 
 		$seed_social_echo .= '</div>';
 	}
@@ -291,7 +301,8 @@ function seed_social_init() {
 	input#seed-social-facebook-text,
 	input#seed-social-twitter-text,
 	input#seed-social-google-plus-text,
-	input#seed-social-line-text {
+	input#seed-social-line-text,
+	input#seed-social-email-text	{
 		position: absolute;margin: -3em 0 0 24px;width: 100px;
 	}</style>
 	<div class="wrap">
@@ -406,6 +417,19 @@ function seed_social_get_settings() {
 					'title'   => esc_html__( '', 'seed-social' ),
 					'type'    => 'text',
 					'default' => 'Line'
+				),
+				array(
+					'id'      => seed_social_get_option_id( 'is_email' ),
+					'title'   => esc_html__( 'Email', 'seed-social' ),
+					'type'    => 'checkbox',
+					'options' => array( 'on' => esc_html__( '', 'seed-social' ) ),
+					'default' => array( 'on' )
+				),
+				array(
+					'id'      => seed_social_get_option_id( 'email_text' ),
+					'title'   => esc_html__( '', 'seed-social' ),
+					'type'    => 'text',
+					'default' => 'Email'
 				),
 				array(
 					'id'      => seed_social_get_option_id( 'is_open_graph' ),
